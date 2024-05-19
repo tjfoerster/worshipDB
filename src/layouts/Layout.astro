@@ -14,7 +14,7 @@ const api = new URL("/sync", Astro.url)
 <html lang="de">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={import.meta.env.APP_DESCRIPTION || "Worship song database"} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<ViewTransitions />
