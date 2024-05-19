@@ -1,0 +1,44 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+
+const api = new URL("/sync", Astro.url)
+---
+
+<!doctype html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<ViewTransitions />
+		<title>{title}</title>
+	</head>
+	<body class="dark:bg-gray-900">
+		<nav class="sticky top-0 relative bg-white shadow dark:bg-gray-800">
+			<div class="container px-6 py-4 mx-auto flex justify-between items-center">
+				<a href="/" class="text-lg font-bold dark:text-white">worshipDB</a>
+				<button id="refresh-button" class="flex items-center px-4 py-2 text-sm font-medium capitalize border rounded-lg bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-600 transition-colors duration-200 sm:text-base sm:px-6 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+					<svg class="w-4 h-4 me-1 sm:w-5 sm:h-5 sm:me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+					</svg>
+					<span>refresh</span>
+				</button>
+			</div>
+		</nav>
+		<main transition:animate="slide" class="container px-6 py-4 mx-auto"><slot /></main>
+	</body>
+</html>
+
+<script type="module" define:vars={{ api }}>
+	document.getElementById('refresh-button')?.addEventListener('click', async () => {
+		await fetch(api);
+		window.location.reload();
+	});
+</script>

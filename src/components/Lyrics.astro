@@ -1,0 +1,29 @@
+---
+import xml2js from 'xml2js';
+interface Props {
+    xml: string;
+}
+const { xml } = Astro.props;
+
+const parser = new xml2js.Parser(/* options */);
+const song: {_: string; $: {type: string; label: string}}[] = await parser.parseStringPromise(xml).then(function (result: any) {
+  return result?.song?.lyrics[0]?.verse;
+})
+---
+
+<div class="text-center dark:text-white">
+    {song?.map(s => 
+        <div class="mb-6">
+            <p class="text-sm sm:text-base text-red-600 dark:text-red-300">{s.$.type} {s.$.label}</p>
+            <p set:html={
+                s._.replaceAll("[---]\n", "")
+                   .replaceAll("[--}{--]\n", "")
+                   .replaceAll("{eng}", "<span class='italic text-sm sm:text-base text-gray-600 dark:text-gray-300'>")
+                   .replaceAll("{/eng}", "</span><br>")
+                   .replaceAll("{t}", "<span class='italic text-sm sm:text-base text-gray-600 dark:text-gray-300'>")
+                   .replaceAll("{/t}", "</span>")
+                   .replaceAll("\n", "<br>")
+            } class="sm:text-lg" />
+        </div>
+    )}
+</div>

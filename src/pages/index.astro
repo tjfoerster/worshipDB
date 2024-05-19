@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SongItem from '../components/SongItem.astro';
+import { authorize, downloadSQLiteFile } from '../lib/googleDrive';
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
+import type { Song } from '../lib/types';
+import path from 'path';
+
+// For initial connection with Google: authorize with `code` parameter and download file
+const code = Astro.url.searchParams.get('code');
+if (code) {
+	const auth = await authorize(code);
+	const fileId = import.meta.env.SQLITE_FILE_ID;
+	await downloadSQLiteFile(auth, fileId);
+}
+
+let songs: Song[] = []
+try {
+	const db = await open({
+		filename: path.join(process.cwd(), 'downloaded.sqlite'),
+		driver: sqlite3.Database
+	});
+	songs = await db.all('SELECT * FROM songs ORDER BY title ASC');
+} catch(err) {
+	console.log(err);
+}
+---
+
+<Layout title="worshipDB">
+	<p class="text-sm md:text-base text-center dark:text-white mb-4">Suche mit <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Strg</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">F</kbd></p>
+	<ol>
+		{songs.map(song => <SongItem song={song} />)}
+	</ol>
+</Layout>

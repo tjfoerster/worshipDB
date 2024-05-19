@@ -1,0 +1,15 @@
+---
+import type { Song } from '../lib/types';
+
+interface Props {
+	song: Song;
+}
+const { song } = Astro.props;
+---
+
+<li class="px-4 py-2 mb-2 border rounded-lg bg-white dark:bg-gray-900 dark:border-gray-700 transition-colors duration-200 dark:hover:bg-gray-800 dark:text-white hover:bg-gray-100">
+	<a href={`/${song.id}`}>
+		<h2 class="font-bold">{song.title}</h2>
+		<p class="text-sm">CCLI {song.ccli_number} | {song.copyright}</p>
+	</a>
+</li>
