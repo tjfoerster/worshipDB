@@ -37,7 +37,7 @@ try {
 ---
 
 <Layout title={song?.title || ""}>
-    <h1 class="font-bold text-xl text-center mb-2 dark:text-white">{song?.title}</h1>
+    <h1 class="font-bold text-xl text-center mt-6 mb-2 dark:text-white">{song?.title}</h1>
     <p class="italic text-center dark:text-white mb-6">{song?.authors}</p>
     <hr class="w-64 h-1 mx-auto my-8 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
     <Lyrics xml={song?.lyrics || ""} />
