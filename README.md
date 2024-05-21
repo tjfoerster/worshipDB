@@ -1,4 +1,12 @@
-# worshipDB: a simple web application for accessing your OpenLP song database, synchronised with Google Drive
+# worshipDB
+
+**A simple web application for accessing your OpenLP song database, synchronised with Google Drive.**
+
+_TODO: Add screenshots here_
+
+## Our workflow
+
+_TODO: Describe our workflow here_
 
 ## Prerequisites
 
@@ -12,8 +20,14 @@ Use this Guide to setup Google Cloud project, enable Google Drive API and config
 
 [https://developers.google.com/drive/api/quickstart/nodejs](https://developers.google.com/drive/api/quickstart/nodejs)
 
-TODO: Add more details here!
+_TODO: Add more details here!_
 
 ## Setup worshipDB on your server
 
-TODO: Add all steps here!
+_TODO: Add all steps here!_
+
+## Final remarks
+
+* **Make sure that you and your users have the rights to use the songs. So share your database very carefully!**
+* This project has been developed for German-speaking users. There are therefore a few hard-coded German terms because we do not use an internationalization framework for reasons of simplicity. But you can do anything with the code. So change it if you want.
+* Let's go and have blessed worship 🚀
